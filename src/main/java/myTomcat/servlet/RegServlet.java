@@ -8,7 +8,7 @@ import java.util.Arrays;
 import myTomcat.http.HttpRequest;
 import myTomcat.http.HttpResponse;
 
-public class RegServlet {
+public class RegServlet extends HttpServlet {
 	
 	
 	public RegServlet() {}
@@ -27,16 +27,13 @@ public class RegServlet {
 				raf.read(data);
 				String name = new String(data,"UTF-8").trim();
 				if(name.equals(username)) {
-					File file = new File("./webapps/bobo_page/user_exists.html");
-					response.setFile(file);
+					forward(request,response,"/bobo_page/user_exists.html");
 					return;
 				}
 			}
 			
 			add_a_new_user(raf,request);
-			
-			File file = new File("./webapps/bobo_page/reg_success.html");
-			response.setFile(file);
+			forward(request,response,"/bobo_page/reg_success.html");
 		}catch(Exception e) {
 			e.printStackTrace();
 		}

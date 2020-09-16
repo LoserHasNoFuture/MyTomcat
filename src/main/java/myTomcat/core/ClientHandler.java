@@ -7,7 +7,9 @@ import java.io.File;
 import myTomcat.http.EmptyRequestException;
 import myTomcat.http.HttpRequest;
 import myTomcat.http.HttpResponse;
+import myTomcat.servlet.HttpServlet;
 import myTomcat.servlet.RegServlet;
+import myTomcat.servlet.SigninServlet;
 
 
 public class ClientHandler implements Runnable{
@@ -24,9 +26,9 @@ public class ClientHandler implements Runnable{
 			HttpRequest request = new HttpRequest(socket);
 			HttpResponse response = new HttpResponse(socket);
 			String path = request.get_request_uri();
+			HttpServlet servlet = ServletContext.getServlet(path);
 			
-			if("/bobo_page/reg".equals(path)) {
-				RegServlet servlet = new RegServlet();
+			if(servlet != null) {
 				servlet.service(request,response);
 			}else{
 				File file = new File("./webapps"+path);

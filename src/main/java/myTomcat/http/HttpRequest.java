@@ -61,7 +61,7 @@ public class HttpRequest{
 			StringBuilder builder = new StringBuilder();
 			while((d = in.read())!=-1) {
 				c2 = (char)d;
-				if(c1==13&&c2==10) { //CRLF
+				if(c1==HttpContext.getCR()&&c2==HttpContext.getLF()) { //CRLF
 					break;
 				}
 				builder.append(c2);
@@ -90,7 +90,6 @@ public class HttpRequest{
 	
 	public void parse_url() {
 		String line = this.url;
-		System.out.println(line);
 		if(line.indexOf("?") != -1) {
 			String[] data = line.split("\\?");
 			this.requestURI = data[0];
